@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('GIT Clone') {
+            steps {
+                git branch: 'main', credentialsId: 'GIT', url: 'https://github.com/Ankitadi5746/Terraform-CICD.git'
+            }
+        }
+        stage('terraform version') {
+            steps {
+                sh 'terraform version'
+            }
+        }
+        stage('terraform init') {
+            steps {
+                sh 'terraform init'
+            }
+        }
+        stage('terraform Validate') {
+            steps {
+                sh 'terraform validate'
+            }
+        }
+        stage('terraform Plan') {
+            steps {
+                sh 'terraform plan'
+            }
+        }
+        stage('terraform apply/destroy') {
+            steps {
+                echo 'terraform ${action} --auto-approve'
+            }
+        }
+    }
+}
